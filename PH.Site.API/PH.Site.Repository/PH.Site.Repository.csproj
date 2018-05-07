@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PH.Site.Entity\PH.Site.Entity.csproj" />
+    <ProjectReference Include="..\PH.Site.IRepository\PH.Site.IRepository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp">
+      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.0.0\ref\netcoreapp2.0\Microsoft.CSharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
