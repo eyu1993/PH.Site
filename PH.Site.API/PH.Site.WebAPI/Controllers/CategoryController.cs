@@ -11,5 +11,9 @@ namespace PH.Site.WebAPI.Controllers
     [Route("api/Category")]
     public class CategoryController : Controller
     {
+        public IActionResult Get()
+        {
+            return Ok();
+        }
     }
 }
