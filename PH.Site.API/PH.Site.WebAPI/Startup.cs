@@ -19,7 +19,7 @@ namespace PH.Site.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddJsonOptions(option => option.SerializerSettings.ContractResolver = new DefaultContractResolver());
-            services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+            //services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
