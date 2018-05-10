@@ -14,9 +14,12 @@ namespace PH.Site.WebAPI.Mapper
         {
             var mapper = CreateMap<CategoryDTO, AppCategory>();
             mapper.ForMember(o => o.CategoryId, opt => opt.MapFrom(s => s.Id));
-            mapper.ForMember(o => o.CreateDate, opt => opt.MapFrom(s => DateTime.Now));
-            mapper.ForMember(o => o.ModifyDate, opt => opt.MapFrom(s => DateTime.Now));
-            CreateMap<AppCategory, CategoryDTO>();
+            mapper.ForMember(o => o.CreateDate, opt => opt.MapFrom(s => s.CreateDate ?? DateTime.Now));
+            mapper.ForMember(o => o.ModifyDate, opt => opt.MapFrom(s => s.ModifyDate ?? DateTime.Now));
+
+
+            var mapper2 = CreateMap<AppCategory, CategoryDTO>();
+            mapper2.ForMember(o => o.Id, opt => opt.MapFrom(s => s.CategoryId));
         }
     }
 }

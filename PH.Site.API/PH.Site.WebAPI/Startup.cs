@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
 using PH.Site.UnitOfWork;
+using PH.Site.WebAPI.Middleware;
 
 namespace PH.Site.WebAPI
 {
@@ -32,7 +33,7 @@ namespace PH.Site.WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseMiddleware(typeof(ExceptionHandlerMiddleWare));
             app.UseMvc();
         }
     }

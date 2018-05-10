@@ -39,7 +39,16 @@ namespace PH.Site.WebAPI.Controllers
         [HttpPost]
         public IActionResult Add(App app)
         {
-            _uow.AppRepository.Add(app);
+            var testApp = new App()
+            {
+                Id = Guid.NewGuid(),
+                CodeUrl = "https://github.com/eyu1993/PH.Site",
+                Image = Guid.NewGuid().ToString(),
+                Name = "个人网站",
+                Description = "个人网站，用来记录自己做过的项目"
+            };
+            _uow.AppRepository.Add(testApp);
+            _uow.SaveChanges();
             return Ok(app);
         }
 
