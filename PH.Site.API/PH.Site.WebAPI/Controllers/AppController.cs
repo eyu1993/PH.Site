@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PH.Site.Common;
 using PH.Site.Entity;
 using PH.Site.UnitOfWork;
+using PH.Site.WebAPI.Models;
 
 namespace PH.Site.WebAPI.Controllers
 {
@@ -14,30 +16,48 @@ namespace PH.Site.WebAPI.Controllers
     [Route("api/App")]
     public class AppController : Controller
     {
-        public IUnitOfWork UOW { get; set; }
-        public AppController(IUnitOfWork unitOfWork)
+        private IUnitOfWork _uow;
+        private IMapper _mapper;
+        public AppController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            this.UOW = unitOfWork;
+            this._uow = unitOfWork;
+            this._mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(UOW.AppRepository.Get());
+            return Ok(DataManager.GetAll());
+        }
+
+        [HttpGet("{AppId}")]
+        public IActionResult Get(Guid AppId)
+        {
+            return Ok(DataManager.Get());
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody]App app)
+        public IActionResult Add(App app)
         {
-            UOW.AppRepository.Add(app);
-            return Ok();
+            _uow.AppRepository.Add(app);
+            return Ok(app);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            UOW.AppRepository.Delete(id);
+            //UOW.AppRepository.Delete(id);
             return Ok(id);
+        }
+
+        [HttpPost("Category")]
+        public IActionResult AddCategory(Guid appId, CategoryDTO category)
+        {
+            AppCategory cat = _mapper.Map<AppCategory>(category);
+            cat.AppId = appId;
+            _uow.AppRepository.AddCategory(cat);
+            _uow.SaveChanges();
+            return Ok();
         }
     }
 }

@@ -21,14 +21,14 @@ namespace PH.Site.Repository
 
         public void Add(App app)
         {
-            string sql = "insert into app(Id,Name,Image,CodeUrl) values(@Id,@Name,@Image,CodeUrl)";
+            string sql = "insert into app(Id,Name,Image,CodeUrl,Description) values(@Id,@Name,@Image,@CodeUrl,@Description)";
             _conn.Execute(sql, app, _trans);
         }
 
-        public void AddCategory(List<AppCategory> categories)
+        public void AddCategory(AppCategory category)
         {
-            string sql2 = "insert into AppCategory(AppId,CategoryId,AppName,AppUrl,QRCode) values(@AppId,@CategoryId,@AppName,@AppUrl,@QRCode)";
-            _conn.Execute(sql2, categories, _trans);
+            string sql2 = "insert into AppCategory(AppId,CategoryId,Url,QRCode,CreateDate,ModifyDate) values(@AppId,@CategoryId,@Url,@QRCode,@CreateDate,@ModifyDate)";
+            _conn.Execute(sql2, category, _trans);
         }
 
         public void Delete(Guid appId)
@@ -54,7 +54,11 @@ namespace PH.Site.Repository
         public AppViewModel Get(Guid appId)
         {
             AppViewModel model = new AppViewModel();
-            string sql = "select a.Id,a.Image,a.Image,ac.App_Id,ac.Category_Id,ac.App_Url,ac.QRCode,ac.Create_Date,ac.Last_Edit_Date from App as a right join AppCategory as ac  on a.Id=ac.App_Id and a.Id =@Id";
+            //string sql = "select a.Id,a.Image,a.Image,ac.App_Id,ac.Category_Id,ac.App_Url,ac.QRCode,ac.Create_Date,ac.Last_Edit_Date from App as a right join AppCategory as ac  on a.Id=ac.App_Id and a.Id =@Id";
+            string sql = "select * from App as a " +
+                "left join AppCategory as ac on a.Id = ac.AppId " +
+                "left join Category as c on ac.CategoryId = c.Id " +
+                "where a.Id = @Id";
             var user = _conn.Query<App, AppCategory, App>(sql, (app, category) =>
             {
                 model.AppId = app.Id;
