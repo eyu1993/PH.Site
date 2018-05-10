@@ -8,8 +8,7 @@ namespace PH.Site.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {
-        void Commit();
-        void Rollback();
+        void SaveChanges();
         IAppRepository AppRepository { get; }
     }
 }

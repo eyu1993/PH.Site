@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PH.Site.Common\PH.Site.Common.csproj" />
     <ProjectReference Include="..\PH.Site.IRepository\PH.Site.IRepository.csproj" />
     <ProjectReference Include="..\PH.Site.Repository\PH.Site.Repository.csproj" />
   </ItemGroup>
