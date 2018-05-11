@@ -1,4 +1,5 @@
-﻿using PH.Site.Entity;
+﻿using PH.Site.DTO;
+using PH.Site.Entity;
 using PH.Site.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -57,12 +58,12 @@ namespace PH.Site.IRepository
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        AppViewModel Get(Guid appId);
+        AppDTO Get(Guid appId);
 
         /// <summary>
         /// 获取所有app
         /// </summary>
         /// <returns></returns>
-        IEnumerable<AppViewModel> Get();
+        IEnumerable<AppDTO> Get();
     }
 }

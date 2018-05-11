@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PH.Site.Common\PH.Site.Common.csproj" />
+    <ProjectReference Include="..\PH.Site.DTO\PH.Site.DTO.csproj" />
     <ProjectReference Include="..\PH.Site.UnitOfWork\PH.Site.UnitOfWork.csproj" />
   </ItemGroup>
 

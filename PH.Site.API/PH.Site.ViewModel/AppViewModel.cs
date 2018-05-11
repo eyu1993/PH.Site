@@ -15,7 +15,7 @@ namespace PH.Site.ViewModel
         public string AppName { get; set; }
         public string Image { get; set; }
         public string CodeUrl { get; set; }
-        public string Remark { get; set; }
+        public string Description { get; set; }
         public virtual ICollection<AppCategory> Categories { get; set; }
     }
 }

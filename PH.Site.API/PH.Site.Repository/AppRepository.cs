@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Dapper;
 using System;
 using PH.Site.ViewModel;
+using PH.Site.DTO;
 
 namespace PH.Site.Repository
 {
@@ -51,39 +52,79 @@ namespace PH.Site.Repository
             _conn.Execute(sql, new { AppId = appCategory.AppId, CategoryId = appCategory.CategoryId }, _trans);
         }
 
-        public AppViewModel Get(Guid appId)
+        public AppDTO Get(Guid appId)
         {
-            AppViewModel model = new AppViewModel();
-            //string sql = "select a.Id,a.Image,a.Image,ac.App_Id,ac.Category_Id,ac.App_Url,ac.QRCode,ac.Create_Date,ac.Last_Edit_Date from App as a right join AppCategory as ac  on a.Id=ac.App_Id and a.Id =@Id";
-            string sql = "select * from App as a " +
-                "left join AppCategory as ac on a.Id = ac.AppId " +
-                "left join Category as c on ac.CategoryId = c.Id " +
+            AppDTO model = new AppDTO();
+            string sql = "select a.Id,a.Name,a.Image,a.CodeUrl,a.Description,c.Id,c.Name,c.Icon,ac.Url,ac.QRCode,ac.CreateDate,ac.ModifyDate " +
+                "from App as a " +
+                "left join AppCategory as ac " +
+                "on a.Id = ac.AppId " +
+                "left join Category as c " +
+                "on ac.CategoryId = c.Id " +
                 "where a.Id = @Id";
-            var user = _conn.Query<App, AppCategory, App>(sql, (app, category) =>
-            {
-                model.AppId = app.Id;
-                model.AppName = app.Name;
-                model.Image = app.Image;
-                model.Categories.Add(category);
-                return app;
-            }, new { Id = appId }, splitOn: "App_Id");
-            //string sql = "select * from App where Id=@AppId;select * from AppCategory where AppId=@AppId";
-            //var reader = _conn.QueryMultiple(sql);
-            //var app = reader.ReadFirstOrDefault<App>();
-            //var categories = reader.Read<AppCategory>().AsList();
-            //AppViewModel model = new AppViewModel()
-            //{
-            //    AppId = app.Id,
-            //    AppName = app.Name,
-            //    Image = app.Image,
-            //    Categories = categories,
-            //};
+            var user = _conn.Query<App, Category, AppCategory, App>(sql, (a, c, ac) =>
+              {
+                  model.AppId = a.Id;
+                  model.AppName = a.Name;
+                  model.CodeUrl = a.CodeUrl;
+                  model.Description = a.Description;
+                  model.Image = a.Image;
+                  model.Category.Add(new CategoryDTO()
+                  {
+                      Id = c.Id,
+                      Name = c.Name,
+                      Icon = c.Icon,
+                      Url = ac.Url,
+                      QRCode = ac.QRCode,
+                      CreateDate = ac.CreateDate,
+                      ModifyDate = ac.ModifyDate
+                  });
+
+                  return null;
+              }, new { Id = appId }, transaction: _trans, splitOn: "Id,Url");
             return model;
         }
 
-        public IEnumerable<AppViewModel> Get()
+        public IEnumerable<AppDTO> Get()
         {
-            throw new NotImplementedException();
+            List<AppDTO> list = new List<AppDTO>();
+            string sql = "select a.Id,a.Name,a.Image,a.CodeUrl,a.Description,c.Id,c.Name,c.Icon,ac.Url,ac.QRCode,ac.CreateDate,ac.ModifyDate " +
+                "from App as a " +
+                "left join AppCategory as ac " +
+                "on a.Id = ac.AppId " +
+                "left join Category as c " +
+                "on ac.CategoryId = c.Id ";
+            _conn.Query<App, Category, AppCategory, App>(sql, (a, c, ac) =>
+            {
+                AppDTO model = new AppDTO();
+                model.AppId = a.Id;
+                model.AppName = a.Name;
+                model.CodeUrl = a.CodeUrl;
+                model.Description = a.Description;
+                model.Image = a.Image;
+                if (!list.Exists(l => l.AppId == a.Id))
+                {
+                    list.Add(model);
+                }
+                else
+                {
+                    if (c != null && ac != null)
+                    {
+                        model.Category.Add(new CategoryDTO()
+                        {
+                            Id = c.Id,
+                            Name = c.Name,
+                            Icon = c.Icon,
+                            Url = ac.Url,
+                            QRCode = ac.QRCode,
+                            CreateDate = ac.CreateDate,
+                            ModifyDate = ac.ModifyDate
+                        });
+                    }
+                }
+                return null;
+            }, transaction: _trans, splitOn: "Id,Url");
+            return list;
         }
 
         public void Update(App app)

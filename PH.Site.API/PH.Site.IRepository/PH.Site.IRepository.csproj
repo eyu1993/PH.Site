@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PH.Site.DTO\PH.Site.DTO.csproj" />
     <ProjectReference Include="..\PH.Site.Entity\PH.Site.Entity.csproj" />
     <ProjectReference Include="..\PH.Site.ViewModel\PH.Site.ViewModel.csproj" />
   </ItemGroup>

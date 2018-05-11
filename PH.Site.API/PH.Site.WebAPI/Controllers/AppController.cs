@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PH.Site.Common;
+using PH.Site.DTO;
 using PH.Site.Entity;
 using PH.Site.UnitOfWork;
 using PH.Site.WebAPI.Models;
+using System;
 
 namespace PH.Site.WebAPI.Controllers
 {
@@ -34,19 +29,19 @@ namespace PH.Site.WebAPI.Controllers
         [AllowAnonymous]
         public IActionResult Get()
         {
-            return Ok(DataManager.GetAll());
+            return Ok(_uow.AppRepository.Get());
         }
 
         /// <summary>
         /// 根据appId获取单个app
         /// </summary>
-        /// <param name="AppId"></param>
+        /// <param name="appId"></param>
         /// <returns></returns>
-        [HttpGet("{AppId}")]
+        [HttpGet("{appId}")]
         [AllowAnonymous]
-        public IActionResult Get(Guid AppId)
+        public IActionResult Get(Guid appId)
         {
-            return Ok(DataManager.Get());
+            return Ok(_uow.AppRepository.Get(appId));
         }
 
         /// <summary>
