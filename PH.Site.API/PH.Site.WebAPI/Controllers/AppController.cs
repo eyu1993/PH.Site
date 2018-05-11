@@ -14,7 +14,6 @@ using PH.Site.WebAPI.Models;
 
 namespace PH.Site.WebAPI.Controllers
 {
-    [Authorize]
     [Produces("application/json")]
     [Route("api/App")]
     public class AppController : Controller

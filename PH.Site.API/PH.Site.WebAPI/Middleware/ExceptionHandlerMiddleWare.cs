@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using PH.Site.Common;
+using PH.Site.WebAPI.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -44,27 +43,26 @@ namespace PH.Site.WebAPI.Middleware
             //返回友好的提示
             var response = context.Response;
 
-            ErrorResult error = new ErrorResult();
+            ErrorResult result = new ErrorResult();
 
             //状态码
             if (exception is UnauthorizedAccessException)
             {
-                error.Error = response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                error.Message = "Unauthorized";
+                result.Error = response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                result.Message = "Unauthorized";
             }
             else if (exception is Exception)
             {
-                error.Error = response.StatusCode = (int)HttpStatusCode.BadRequest;
-                error.Message = "BadRequest";
+                result.Error = response.StatusCode = (int)HttpStatusCode.BadRequest;
+                result.Message = "BadRequest";
             }
-            response.ContentType = context.Request.Headers["Accept"];
+            else
+            {
+                result.Error = response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                result.Message = "InternalServerError";
+            }
             response.ContentType = "application/json";
-            await response.WriteAsync(JsonConvert.SerializeObject(error)).ConfigureAwait(false);
+            await response.WriteAsync(JsonConvert.SerializeObject(result)).ConfigureAwait(false);
         }
-    }
-    public class ErrorResult
-    {
-        public int Error { get; set; }
-        public string Message { get; set; }
     }
 }

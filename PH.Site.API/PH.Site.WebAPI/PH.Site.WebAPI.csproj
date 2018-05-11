@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Filter\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

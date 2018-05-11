@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json.Serialization;
 using PH.Site.UnitOfWork;
+using PH.Site.WebAPI.Filter;
 using PH.Site.WebAPI.Middleware;
 using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
@@ -24,9 +25,17 @@ namespace PH.Site.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().AddJsonOptions(option => option.SerializerSettings.ContractResolver = new DefaultContractResolver());
-            services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+            services.AddMvc(opt =>
+            {
+                opt.Filters.Add<ValidationModelFilter>();
+            }).AddJsonOptions(opt =>
+            {
+                opt.SerializerSettings.ContractResolver = new DefaultContractResolver();
+            });
+
+
             services.AddAutoMapper();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info
@@ -40,6 +49,8 @@ namespace PH.Site.WebAPI
                 var xmlPath = Path.Combine(basePath, "PH.Site.WebAPI.xml");
                 c.IncludeXmlComments(xmlPath);
             });
+
+            services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
