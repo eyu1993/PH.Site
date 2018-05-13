@@ -1,10 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PH.Site.DTO;
-using PH.Site.Entity;
-using PH.Site.UnitOfWork;
-using PH.Site.WebAPI.Models;
+using PH.Site.IRepository;
 using System;
 
 namespace PH.Site.WebAPI.Controllers
@@ -15,10 +12,10 @@ namespace PH.Site.WebAPI.Controllers
     {
         private IUnitOfWork _uow;
         private IMapper _mapper;
-        public AppController(IUnitOfWork unitOfWork, IMapper mapper)
+        public AppController(IUnitOfWork unitOfWork)
         {
             this._uow = unitOfWork;
-            this._mapper = mapper;
+            //this._mapper = mapper;
         }
 
         /// <summary>
@@ -52,8 +49,8 @@ namespace PH.Site.WebAPI.Controllers
         [HttpPost]
         public IActionResult Add(AppDTO dto)
         {
-            var app = _mapper.Map<App>(dto);
-            _uow.AppRepository.Add(app);
+            //var app = _mapper.Map<App>(dto);
+            _uow.AppRepository.Add(dto);
             _uow.SaveChanges();
             return Ok(dto);
         }

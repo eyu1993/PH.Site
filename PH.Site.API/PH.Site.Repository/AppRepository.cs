@@ -1,23 +1,17 @@
-﻿using PH.Site.Entity;
+﻿using Dapper;
+using PH.Site.DTO;
 using PH.Site.IRepository;
+using PH.Site.Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
-using Dapper;
-using System;
-using PH.Site.ViewModel;
-using PH.Site.DTO;
 
 namespace PH.Site.Repository
 {
-    public class AppRepository : IAppRepository
+    public class AppRepository : BaseRepository, IAppRepository
     {
-        private IDbConnection _conn;
-        private IDbTransaction _trans;
-        public AppRepository(IDbConnection connection, IDbTransaction transaction)
+        public AppRepository(IDbConnection connection, IDbTransaction transaction) : base(connection, transaction)
         {
-            this._conn = connection;
-            this._trans = transaction;
         }
 
         public void Add(App app)
@@ -26,30 +20,21 @@ namespace PH.Site.Repository
             _conn.Execute(sql, app, _trans);
         }
 
-        public void AddCategory(AppCategory category)
+        public void AddCategory(Guid appId, AppCategory category)
         {
-            string sql2 = "insert into AppCategory(AppId,CategoryId,Url,QRCode,CreateDate,ModifyDate) values(@AppId,@CategoryId,@Url,@QRCode,@CreateDate,@ModifyDate)";
-            _conn.Execute(sql2, category, _trans);
+            string sql = "insert into AppCategory(AppId,CategoryId,Url,QRCode,CreateDate,ModifyDate) values(@AppId,@CategoryId,@Url,@QRCode,@CreateDate,@ModifyDate)";
+            _conn.Execute(sql, category, _trans);
         }
 
         public void Delete(Guid appId)
         {
-            string sql = "delete from App where Id=@Id";
-            _conn.Execute(sql, new { Id = appId }, _trans);
-            string sql2 = "delete from AppCategory where AppId=@AppId";
-            _conn.Execute(sql2, new { AppId = appId }, _trans);
+            throw new NotImplementedException();
         }
 
         public void DeleteCategory(Guid appId, Guid categoryId)
         {
             string sql2 = "delete from AppCategory where AppId=@AppId and CategoryId=@CategoryId";
             _conn.Execute(sql2, new { AppId = appId, CategoryId = categoryId }, _trans);
-        }
-
-        public void DeleteCategory(AppCategory appCategory)
-        {
-            string sql = "delete from AppCategory where AppId=@AppId and CategoryId=@CategoryId";
-            _conn.Execute(sql, new { AppId = appCategory.AppId, CategoryId = appCategory.CategoryId }, _trans);
         }
 
         public AppDTO Get(Guid appId)
@@ -63,25 +48,25 @@ namespace PH.Site.Repository
                 "on ac.CategoryId = c.Id " +
                 "where a.Id = @Id";
             var user = _conn.Query<App, Category, AppCategory, App>(sql, (a, c, ac) =>
-              {
-                  model.AppId = a.Id;
-                  model.AppName = a.Name;
-                  model.CodeUrl = a.CodeUrl;
-                  model.Description = a.Description;
-                  model.Image = a.Image;
-                  model.Category.Add(new CategoryDTO()
-                  {
-                      Id = c.Id,
-                      Name = c.Name,
-                      Icon = c.Icon,
-                      Url = ac.Url,
-                      QRCode = ac.QRCode,
-                      CreateDate = ac.CreateDate,
-                      ModifyDate = ac.ModifyDate
-                  });
+            {
+                model.AppId = a.Id;
+                model.AppName = a.Name;
+                model.CodeUrl = a.CodeUrl;
+                model.Description = a.Description;
+                model.Image = a.Image;
+                model.Category.Add(new CategoryDTO()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Icon = c.Icon,
+                    Url = ac.Url,
+                    QRCode = ac.QRCode,
+                    CreateDate = ac.CreateDate,
+                    ModifyDate = ac.ModifyDate
+                });
 
-                  return null;
-              }, new { Id = appId }, transaction: _trans, splitOn: "Id,Url");
+                return null;
+            }, new { Id = appId }, transaction: _trans, splitOn: "Id,Url");
             return model;
         }
 
@@ -129,7 +114,7 @@ namespace PH.Site.Repository
 
         public void Update(App app)
         {
-            string sql = "update App set Name=@Name,Image=@Image,CodeUrl=@CodeUrl,Remark=@Remark where Id=@Id";
+            string sql = "update App set Name=@Name,Image=@Image,CodeUrl=@CodeUrl,Description=@Description where Id=@Id";
             _conn.Execute(sql, app, _trans);
         }
 

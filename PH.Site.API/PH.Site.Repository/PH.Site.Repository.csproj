@@ -9,9 +9,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PH.Site.DTO\PH.Site.DTO.csproj" />
-    <ProjectReference Include="..\PH.Site.Entity\PH.Site.Entity.csproj" />
     <ProjectReference Include="..\PH.Site.IRepository\PH.Site.IRepository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Data.SqlClient">
+      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\system.data.sqlclient\4.4.3\ref\netstandard2.0\System.Data.SqlClient.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

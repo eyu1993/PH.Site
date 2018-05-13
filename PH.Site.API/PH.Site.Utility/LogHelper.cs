@@ -1,6 +1,6 @@
 ﻿using NLog;
 
-namespace PH.Site.Common
+namespace PH.Site.Utility
 {
     public static class LogHelper
     {
