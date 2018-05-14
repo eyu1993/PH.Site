@@ -5,7 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json.Serialization;
-using PH.Site.UnitOfWork;
+using PH.Site.IRepository;
+using PH.Site.Repository;
 using PH.Site.WebAPI.Filter;
 using PH.Site.WebAPI.Middleware;
 using Swashbuckle.AspNetCore.Swagger;
@@ -50,7 +51,7 @@ namespace PH.Site.WebAPI
                 c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

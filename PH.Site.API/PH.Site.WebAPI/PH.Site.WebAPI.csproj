@@ -14,8 +14,8 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.4.0" />
   </ItemGroup>
 
@@ -24,9 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PH.Site.Common\PH.Site.Common.csproj" />
     <ProjectReference Include="..\PH.Site.DTO\PH.Site.DTO.csproj" />
-    <ProjectReference Include="..\PH.Site.UnitOfWork\PH.Site.UnitOfWork.csproj" />
+    <ProjectReference Include="..\PH.Site.IRepository\PH.Site.IRepository.csproj" />
+    <ProjectReference Include="..\PH.Site.Repository\PH.Site.Repository.csproj" />
+    <ProjectReference Include="..\PH.Site.Utility\PH.Site.Utility.csproj" />
   </ItemGroup>
 
 </Project>

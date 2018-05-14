@@ -1,8 +1,8 @@
-﻿using PH.Site.ViewModel;
+﻿using PH.Site.Model.BaseModel;
 
 namespace PH.Site.IRepository
 {
-    public interface IBaseRepository<T> where T : BaseViewModel
+    public interface IBaseRepository<T> where T : AggregateRoot
     {
     }
 }

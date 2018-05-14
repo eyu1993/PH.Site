@@ -1,8 +1,9 @@
-﻿using System;
+﻿using PH.Site.Model.BaseModel;
+using System;
 
-namespace PH.Site.Entity
+namespace PH.Site.Model
 {
-    public class AppCategory
+    public class AppCategory : IEntity
     {
         public Guid AppId { get; set; }
         public Guid CategoryId { get; set; }

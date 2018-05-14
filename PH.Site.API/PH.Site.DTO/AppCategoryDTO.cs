@@ -5,23 +5,16 @@ using System.Text;
 
 namespace PH.Site.DTO
 {
-    public class CategoryDTO
+    public class AppCategoryDTO
     {
         [Required]
-        public Guid? CategoryId { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [StringLength(32)]
         public string Name { get; set; }
-
-        [Required]
-        [StringLength(128)]
-        public string Url { get; set; }
-
-        [StringLength(128)]
         public string Icon { get; set; }
-
-        [StringLength(128)]
+        public string Url { get; set; }
         public string QRCode { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? ModifyDate { get; set; }

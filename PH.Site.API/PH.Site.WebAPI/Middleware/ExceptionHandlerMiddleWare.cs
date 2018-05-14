@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using PH.Site.Common;
+using PH.Site.Utility;
 using PH.Site.WebAPI.Models;
 using System;
 using System.Net;

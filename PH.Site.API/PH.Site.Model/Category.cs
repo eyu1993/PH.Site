@@ -1,8 +1,9 @@
-﻿using System;
+﻿using PH.Site.Model.BaseModel;
+using System;
 
-namespace PH.Site.Entity
+namespace PH.Site.Model
 {
-    public class Category
+    public class Category : AggregateRoot
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

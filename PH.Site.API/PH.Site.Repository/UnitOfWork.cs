@@ -1,10 +1,9 @@
-﻿using PH.Site.Common;
-using PH.Site.IRepository;
-using PH.Site.Repository;
+﻿using PH.Site.IRepository;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace PH.Site.UnitOfWork
+namespace PH.Site.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -12,11 +11,14 @@ namespace PH.Site.UnitOfWork
         private IDbTransaction _trans;
         public UnitOfWork()
         {
-            string connStr = "data source=.;initial catalog=MyDb;;Integrated Security=True";
-            _conn = new SqlConnection(connStr);
+            _conn = new SqlConnection("");
             _conn.Open();
-            this._trans = _conn.BeginTransaction();
+            _trans = _conn.BeginTransaction();
         }
+        public IAppRepository AppRepository => new AppRepository(_conn, _trans);
+
+        public ICategoryRepository CategoryRepository => new CategoryRepository(_conn, _trans);
+
         public void Dispose()
         {
             if (_conn != null && _conn.State != ConnectionState.Closed)
@@ -32,14 +34,11 @@ namespace PH.Site.UnitOfWork
             {
                 _trans.Commit();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                LogHelper.Error(ex.ToString());
                 _trans.Rollback();
                 throw;
             }
         }
-
-        public IAppRepository AppRepository => new AppRepository(_conn, _trans);
     }
 }
