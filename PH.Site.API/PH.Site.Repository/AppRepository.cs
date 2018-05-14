@@ -102,26 +102,26 @@ namespace PH.Site.Repository
                 model.CodeUrl = a.CodeUrl;
                 model.Description = a.Description;
                 model.Image = a.Image;
-                if (!list.Exists(l => l.AppId == a.Id))
+                //if (!list.Exists(l => l.AppId == a.Id))
+                //{
+                //    list.Add(model);
+                //}
+                //else
+                //{
+                if (c != null && ac != null)
                 {
-                    list.Add(model);
-                }
-                else
-                {
-                    if (c != null && ac != null)
+                    model.Category.Add(new CategoryDTO()
                     {
-                        model.Category.Add(new CategoryDTO()
-                        {
-                            Id = c.Id,
-                            Name = c.Name,
-                            Icon = c.Icon,
-                            Url = ac.Url,
-                            QRCode = ac.QRCode,
-                            CreateDate = ac.CreateDate,
-                            ModifyDate = ac.ModifyDate
-                        });
-                    }
+                        Id = c.Id,
+                        Name = c.Name,
+                        Icon = c.Icon,
+                        Url = ac.Url,
+                        QRCode = ac.QRCode,
+                        CreateDate = ac.CreateDate,
+                        ModifyDate = ac.ModifyDate
+                    });
                 }
+                // }
                 return null;
             }, transaction: _trans, splitOn: "Id,Url");
             return list;
