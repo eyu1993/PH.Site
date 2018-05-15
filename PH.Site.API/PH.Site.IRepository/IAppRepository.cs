@@ -17,7 +17,7 @@ namespace PH.Site.IRepository
         /// 给app添加分类
         /// </summary>
         /// <param name="category"></param>
-        void AddCategory(Guid appId, AppCategory category);
+        void AddCategory(AppCategory category);
 
         /// <summary>
         /// 删除整个app及分类

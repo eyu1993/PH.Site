@@ -11,7 +11,7 @@ namespace PH.Site.Repository
         private IDbTransaction _trans;
         public UnitOfWork()
         {
-            _conn = new SqlConnection("");
+            _conn = new SqlConnection("data source=.;initial catalog=MyDb;;Integrated Security=True");
             _conn.Open();
             _trans = _conn.BeginTransaction();
         }

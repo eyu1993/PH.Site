@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace PH.Site.DTO
 {
     public class AppCategoryDTO
     {
-        [Required]
-        public Guid Id { get; set; }
+        [BindRequired]
+        public Guid AppId { get; set; }
+
+        [BindRequired]
+        public Guid CategoryId { get; set; }
 
         [Required]
-        [StringLength(32)]
-        public string Name { get; set; }
-        public string Icon { get; set; }
+        [StringLength(128)]
         public string Url { get; set; }
+
+        [StringLength(128)]
         public string QRCode { get; set; }
-        public DateTime? CreateDate { get; set; }
-        public DateTime? ModifyDate { get; set; }
     }
 }

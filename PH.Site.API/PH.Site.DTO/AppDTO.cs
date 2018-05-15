@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -9,15 +10,16 @@ namespace PH.Site.DTO
     {
         public AppDTO()
         {
-            Category = new List<AppCategoryDTO>();
+            Category = new List<CategoryDTO>();
         }
-        [Required]
-        public Guid? AppId { get; set; }
+        [BindRequired]
+        public Guid AppId { get; set; }
 
         [Required]
         [StringLength(32)]
         public string AppName { get; set; }
 
+        [Required]
         [StringLength(128)]
         public string Image { get; set; }
 
@@ -26,6 +28,7 @@ namespace PH.Site.DTO
 
         public string Description { get; set; }
 
-        public virtual ICollection<AppCategoryDTO> Category { get; set; }
+        [BindNever]
+        public virtual ICollection<CategoryDTO> Category { get; set; }
     }
 }

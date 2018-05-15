@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PH.Site.DTO;
 using PH.Site.IRepository;
+using PH.Site.Model;
 using System;
 
 namespace PH.Site.WebAPI.Controllers
@@ -12,10 +14,10 @@ namespace PH.Site.WebAPI.Controllers
     {
         private IUnitOfWork _uow;
         private IMapper _mapper;
-        public AppController(IUnitOfWork unitOfWork)
+        public AppController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this._uow = unitOfWork;
-            //this._mapper = mapper;
+            this._mapper = mapper;
         }
 
         /// <summary>
@@ -49,10 +51,10 @@ namespace PH.Site.WebAPI.Controllers
         [HttpPost]
         public IActionResult Add(AppDTO dto)
         {
-            //var app = _mapper.Map<App>(dto);
-            _uow.AppRepository.Add(dto);
+            App app = _mapper.Map<App>(dto);
+            _uow.AppRepository.Add(app);
             _uow.SaveChanges();
-            return Ok(dto);
+            return Ok();
         }
 
         /// <summary>
@@ -63,8 +65,8 @@ namespace PH.Site.WebAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            //UOW.AppRepository.Delete(id);
-            return Ok(id);
+            _uow.AppRepository.Delete(id);
+            return Ok();
         }
 
         /// <summary>
@@ -74,11 +76,10 @@ namespace PH.Site.WebAPI.Controllers
         /// <param name="category"></param>
         /// <returns></returns>
         [HttpPost("Category")]
-        public IActionResult AddCategory(Guid appId, CategoryDTO category)
+        public IActionResult AddCategory(AppCategoryDTO dto)
         {
-            AppCategory cat = _mapper.Map<AppCategory>(category);
-            cat.AppId = appId;
-            _uow.AppRepository.AddCategory(cat);
+            AppCategory category = _mapper.Map<AppCategory>(dto);
+            _uow.AppRepository.AddCategory(category);
             _uow.SaveChanges();
             return Ok();
         }
