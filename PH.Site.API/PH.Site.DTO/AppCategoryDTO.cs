@@ -6,8 +6,6 @@ namespace PH.Site.DTO
 {
     public class AppCategoryDTO
     {
-        [BindRequired]
-        public Guid AppId { get; set; }
 
         [BindRequired]
         public Guid CategoryId { get; set; }

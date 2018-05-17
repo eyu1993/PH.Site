@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using PH.Site.DTO;
 using PH.Site.IRepository;
-using PH.Site.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,13 +16,26 @@ namespace PH.Site.Repository
         public void Add(AppDTO app)
         {
             string sql = "insert into app(Id,Name,Image,CodeUrl,Description) values(@Id,@Name,@Image,@CodeUrl,@Description)";
-            _conn.Execute(sql, new { Id = app.AppId, Name = app.AppName, app.Image, app.CodeUrl, app.Description }, _trans);
+            _conn.Execute(sql, new
+            {
+                Id = app.AppId,
+                Name = app.AppName,
+                Image = app.Image,
+                CodeUrl = app.CodeUrl,
+                Description = app.Description
+            }, _trans);
         }
 
-        public void AddCategory(AppCategoryDTO category)
+        public void AddCategory(Guid appId, AppCategoryDTO category)
         {
             string sql = "insert into AppCategory(AppId,CategoryId,Url,QRCode,CreateDate,ModifyDate) values(@AppId,@CategoryId,@Url,@QRCode,getdate(),getdate())";
-            _conn.Execute(sql, category, _trans);
+            _conn.Execute(sql, new
+            {
+                AppId = appId,
+                CategoryId = category.CategoryId,
+                Url = category.Url,
+                QRCode = category.QRCode
+            }, _trans);
         }
 
         public void Delete(Guid appId)
@@ -43,13 +55,26 @@ namespace PH.Site.Repository
         public void Update(AppDTO app)
         {
             string sql = "update App set Name=@Name,Image=@Image,CodeUrl=@CodeUrl,Description=@Description where Id=@Id";
-            _conn.Execute(sql, new { Id = app.AppId, Name = app.AppName, app.Image, app.CodeUrl, app.Description }, _trans);
+            _conn.Execute(sql, new
+            {
+                Id = app.AppId,
+                Name = app.AppName,
+                Image = app.Image,
+                CodeUrl = app.CodeUrl,
+                Description = app.Description
+            }, _trans);
         }
 
-        public void UpdateCategory(AppCategoryDTO category)
+        public void UpdateCategory(Guid appId, AppCategoryDTO category)
         {
             string sql = @"update AppCategory set Url=@Url,QRCode=@QRCode,ModifyDate=getdate() where AppId=@AppId and CategoryId=@CategoryId";
-            _conn.Execute(sql, category, _trans);
+            _conn.Execute(sql, new
+            {
+                AppId = appId,
+                Url = category.Url,
+                QRCode = category.QRCode,
+                CategoryId = category.CategoryId
+            }, _trans);
         }
 
         public AppDTO Get(Guid appId)

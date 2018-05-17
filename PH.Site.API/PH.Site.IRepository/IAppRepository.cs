@@ -16,8 +16,9 @@ namespace PH.Site.IRepository
         /// <summary>
         /// 给app添加分类
         /// </summary>
+        /// <param name="appId"></param>
         /// <param name="category"></param>
-        void AddCategory(AppCategoryDTO category);
+        void AddCategory(Guid appId, AppCategoryDTO category);
 
         /// <summary>
         /// 删除整个app及分类
@@ -41,8 +42,9 @@ namespace PH.Site.IRepository
         /// <summary>
         /// 更新指定app下的分类
         /// </summary>
+        /// <param name="appId"></param>
         /// <param name="appCategory"></param>
-        void UpdateCategory(AppCategoryDTO appCategory);
+        void UpdateCategory(Guid appId, AppCategoryDTO appCategory);
 
         /// <summary>
         /// 根据appId获取
