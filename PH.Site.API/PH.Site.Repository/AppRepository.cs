@@ -14,15 +14,15 @@ namespace PH.Site.Repository
         {
         }
 
-        public void Add(App app)
+        public void Add(AppDTO app)
         {
             string sql = "insert into app(Id,Name,Image,CodeUrl,Description) values(@Id,@Name,@Image,@CodeUrl,@Description)";
-            _conn.Execute(sql, app, _trans);
+            _conn.Execute(sql, new { Id = app.AppId, Name = app.AppName, app.Image, app.CodeUrl, app.Description }, _trans);
         }
 
-        public void AddCategory(AppCategory category)
+        public void AddCategory(AppCategoryDTO category)
         {
-            string sql = "insert into AppCategory(AppId,CategoryId,Url,QRCode,CreateDate,ModifyDate) values(@AppId,@CategoryId,@Url,@QRCode,@CreateDate,@ModifyDate)";
+            string sql = "insert into AppCategory(AppId,CategoryId,Url,QRCode,CreateDate,ModifyDate) values(@AppId,@CategoryId,@Url,@QRCode,getdate(),getdate())";
             _conn.Execute(sql, category, _trans);
         }
 
@@ -40,71 +40,79 @@ namespace PH.Site.Repository
             _conn.Execute(sql2, new { AppId = appId, CategoryId = categoryId }, _trans);
         }
 
-        public void Update(App app)
+        public void Update(AppDTO app)
         {
             string sql = "update App set Name=@Name,Image=@Image,CodeUrl=@CodeUrl,Description=@Description where Id=@Id";
-            _conn.Execute(sql, app, _trans);
+            _conn.Execute(sql, new { Id = app.AppId, Name = app.AppName, app.Image, app.CodeUrl, app.Description }, _trans);
         }
 
-        public void UpdateCategory(AppCategory category)
+        public void UpdateCategory(AppCategoryDTO category)
         {
-            string sql = "update AppCategory set Url=@Url,QRCode=@QRCode,ModifyDate=@ModifyDate where AppId=@AppId and CategoryId=@CategoryId";
+            string sql = @"update AppCategory set Url=@Url,QRCode=@QRCode,ModifyDate=getdate() where AppId=@AppId and CategoryId=@CategoryId";
             _conn.Execute(sql, category, _trans);
         }
 
         public AppDTO Get(Guid appId)
         {
-            AppDTO model = new AppDTO();
-            string sql = "select a.Id,a.Name,a.Image,a.CodeUrl,a.Description,c.Id CategoryId,c.Name,c.Icon,ac.Url,ac.QRCode,ac.CreateDate,ac.ModifyDate " +
-                "from App as a " +
-                "left join AppCategory as ac " +
-                "on a.Id = ac.AppId " +
-                "left join Category as c " +
-                "on ac.CategoryId = c.Id " +
-                "where a.Id = @appId";
-            _conn.Query<App, CategoryDTO, App>(sql, (a, c) =>
+            AppDTO model = null;
+            string sql = @"select a.Id AppId,
+                                a.Name AppName,
+                                a.Image,
+                                a.CodeUrl,
+                                a.Description,
+                                c.Id CategoryId,
+                                c.Name,
+                                c.Icon,
+                                ac.Url,
+                                ac.QRCode,
+                                ac.CreateDate,
+                                ac.ModifyDate 
+                            from App as a
+                            left join AppCategory as ac 
+                            on a.Id = ac.AppId
+                            left join Category as c
+                            on ac.CategoryId = c.Id 
+                            where a.Id = @appId";
+            _conn.Query<AppDTO, AppCategoryDTO, AppDTO>(sql, (a, c) =>
             {
-                model.AppId = a.Id;
-                model.AppName = a.Name;
-                model.CodeUrl = a.CodeUrl;
-                model.Description = a.Description;
-                model.Image = a.Image;
+                if (model == null)
+                    model = a;
+
                 if (c != null)
-                {
                     model.Category.Add(c);
-                }
+
                 return null;
-            }, new { appId = appId }, transaction: _trans, splitOn: "CategoryId");
+            }, new { appId }, transaction: _trans, splitOn: "CategoryId");
             return model;
         }
 
         public IEnumerable<AppDTO> Get()
         {
             List<AppDTO> list = new List<AppDTO>();
-            string sql = "select a.Id,a.Name,a.Image,a.CodeUrl,a.Description,c.Id CategoryId,c.Name,c.Icon,ac.Url,ac.QRCode,ac.CreateDate,ac.ModifyDate " +
-                "from App as a " +
-                "left join AppCategory as ac " +
-                "on a.Id = ac.AppId " +
-                "left join Category as c " +
-                "on ac.CategoryId = c.Id ";
-            _conn.Query<App, CategoryDTO, App>(sql, (a, c) =>
+            string sql = @"select a.Id AppId,
+                                a.Name AppName,
+                                a.Image,
+                                a.CodeUrl,
+                                a.Description,
+                                c.Id CategoryId,
+                                c.Name,
+                                c.Icon,
+                                ac.Url,
+                                ac.QRCode,
+                                ac.CreateDate,
+                                ac.ModifyDate 
+                            from App as a
+                            left join AppCategory as ac 
+                            on a.Id = ac.AppId
+                            left join Category as c
+                            on ac.CategoryId = c.Id ";
+            _conn.Query<AppDTO, AppCategoryDTO, AppDTO>(sql, (a, c) =>
             {
-                AppDTO model = new AppDTO();
-                model.AppId = a.Id;
-                model.AppName = a.Name;
-                model.CodeUrl = a.CodeUrl;
-                model.Description = a.Description;
-                model.Image = a.Image;
-
-                if (!list.Exists(f => f.AppId == a.Id))
-                {
-                    list.Add(model);
-                }
+                if (!list.Exists(f => f.AppId == a.AppId))
+                    list.Add(a);
 
                 if (c != null)
-                {
-                    list.Find(f => f.AppId == a.Id).Category.Add(c);
-                }
+                    list.Find(f => f.AppId == a.AppId).Category.Add(c);
 
                 return null;
             }, transaction: _trans, splitOn: "CategoryId");

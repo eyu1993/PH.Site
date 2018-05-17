@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,7 +34,6 @@ namespace PH.Site.WebAPI
             });
 
 
-            services.AddAutoMapper();
 
             services.AddSwaggerGen(c =>
             {
@@ -43,7 +41,7 @@ namespace PH.Site.WebAPI
                 {
                     Title = "PH.Site.API",
                     Version = "v1",
-                    License = new License { Name = "项目地址", Url = "http://baidu.com" },
+                    License = new License { Name = "预览地址", Url = "http://pinhua.site" },
                     Contact = new Contact { Name = "Github", Email = "", Url = "https://github.com/eyu1993/PH.Site" }
                 });
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;

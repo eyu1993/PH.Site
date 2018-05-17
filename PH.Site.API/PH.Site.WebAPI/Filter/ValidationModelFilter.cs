@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using PH.Site.WebAPI.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace PH.Site.WebAPI.Filter
 {
@@ -20,13 +17,13 @@ namespace PH.Site.WebAPI.Filter
         {
             if (!context.ModelState.IsValid)
             {
-                List<ErrorResult> list = new List<ErrorResult>();
+                List<Result> list = new List<Result>();
                 int i = 0;
                 foreach (var item in context.ModelState.Values)
                 {
                     foreach (var error in item.Errors)
                     {
-                        ErrorResult result = new ErrorResult();
+                        Result result = new Result();
                         result.Error = ++i;
                         result.Message = error.ErrorMessage;
                         list.Add(result);
