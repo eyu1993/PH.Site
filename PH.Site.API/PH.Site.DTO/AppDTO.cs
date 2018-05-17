@@ -10,7 +10,7 @@ namespace PH.Site.DTO
     {
         public AppDTO()
         {
-            Category = new List<CategoryDTO>();
+            Category = new List<AppCategoryDTO>();
         }
         [BindRequired]
         public Guid AppId { get; set; }
@@ -29,6 +29,6 @@ namespace PH.Site.DTO
         public string Description { get; set; }
 
         [BindNever]
-        public virtual ICollection<CategoryDTO> Category { get; set; }
+        public virtual ICollection<AppCategoryDTO> Category { get; set; }
     }
 }

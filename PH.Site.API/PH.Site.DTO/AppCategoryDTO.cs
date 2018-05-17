@@ -16,7 +16,19 @@ namespace PH.Site.DTO
         [StringLength(128)]
         public string Url { get; set; }
 
+        [BindNever]
+        public string Name { get; set; }
+
+        [BindNever]
+        public string Icon { get; set; }
+
         [StringLength(128)]
         public string QRCode { get; set; }
+
+        [BindNever]
+        public DateTime? CreateDate { get; set; }
+
+        [BindNever]
+        public DateTime? ModifyDate { get; set; }
     }
 }

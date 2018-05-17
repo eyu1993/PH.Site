@@ -11,13 +11,13 @@ namespace PH.Site.IRepository
         /// 添加app
         /// </summary>
         /// <param name="app"></param>
-        void Add(App app);
+        void Add(AppDTO app);
 
         /// <summary>
         /// 给app添加分类
         /// </summary>
         /// <param name="category"></param>
-        void AddCategory(AppCategory category);
+        void AddCategory(AppCategoryDTO category);
 
         /// <summary>
         /// 删除整个app及分类
@@ -36,13 +36,13 @@ namespace PH.Site.IRepository
         /// 更新app
         /// </summary>
         /// <param name="app"></param>
-        void Update(App app);
+        void Update(AppDTO app);
 
         /// <summary>
         /// 更新指定app下的分类
         /// </summary>
         /// <param name="appCategory"></param>
-        void UpdateCategory(AppCategory appCategory);
+        void UpdateCategory(AppCategoryDTO appCategory);
 
         /// <summary>
         /// 根据appId获取

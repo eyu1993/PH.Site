@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PH.Site.Infrastructure\PH.Site.Infrastructure.csproj" />
     <ProjectReference Include="..\PH.Site.IRepository\PH.Site.IRepository.csproj" />
   </ItemGroup>
 

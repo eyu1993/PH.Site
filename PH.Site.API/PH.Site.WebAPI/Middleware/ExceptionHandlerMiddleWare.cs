@@ -37,15 +37,11 @@ namespace PH.Site.WebAPI.Middleware
 
         private static async Task WriteExceptionAsync(HttpContext context, Exception exception)
         {
-            //记录日志
             LogHelper.Error(exception.GetBaseException().ToString());
 
-            //返回友好的提示
+            Result result = new Result();
+
             var response = context.Response;
-
-            ErrorResult result = new ErrorResult();
-
-            //状态码
             if (exception is UnauthorizedAccessException)
             {
                 result.Error = response.StatusCode = (int)HttpStatusCode.Unauthorized;
