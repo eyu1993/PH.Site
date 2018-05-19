@@ -63,6 +63,7 @@ namespace PH.Site.WebAPI
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "PH.Site.API V1");
+                c.RoutePrefix = "help";
             });
 
             app.UseMiddleware(typeof(ExceptionHandlerMiddleWare));
