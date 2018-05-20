@@ -11,5 +11,6 @@ namespace PH.Site.Model
         public string QRCode { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? ModifyDate { get; set; }
+        //public bool IsActive { get; set; }
     }
 }
