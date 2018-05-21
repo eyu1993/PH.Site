@@ -7,5 +7,6 @@ namespace PH.Site.IRepository
         void SaveChanges();
         IAppRepository AppRepository { get; }
         ICategoryRepository CategoryRepository { get; }
+        IMessageRepository MessageRepository { get; }
     }
 }

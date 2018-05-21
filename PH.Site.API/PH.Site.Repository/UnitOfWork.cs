@@ -16,8 +16,8 @@ namespace PH.Site.Repository
             _trans = _conn.BeginTransaction();
         }
         public IAppRepository AppRepository => new AppRepository(_conn, _trans);
-
         public ICategoryRepository CategoryRepository => new CategoryRepository(_conn, _trans);
+        public IMessageRepository MessageRepository => new MessageRepository(_conn, _trans);
 
         public void Dispose()
         {
