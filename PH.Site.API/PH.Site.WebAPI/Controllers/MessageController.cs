@@ -49,5 +49,20 @@ namespace PH.Site.WebAPI.Controllers
             _uow.SaveChanges();
             return Ok(message);
         }
+
+        /// <summary>
+        /// 删除留言
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public IActionResult Detete(int id)
+        {
+            _uow.MessageRepository.Delete(id);
+            _uow.SaveChanges();
+            return Ok();
+        }
+
+
     }
 }
