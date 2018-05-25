@@ -10,7 +10,7 @@ namespace PH.Site.Model
         public string Url { get; set; }
         public string QRCode { get; set; }
         public DateTime? CreateDate { get; set; }
-        public DateTime? ModifyDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
         //public bool IsActive { get; set; }
     }
 }

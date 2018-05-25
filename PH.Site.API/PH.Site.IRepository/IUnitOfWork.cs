@@ -8,5 +8,6 @@ namespace PH.Site.IRepository
         IAppRepository AppRepository { get; }
         ICategoryRepository CategoryRepository { get; }
         IMessageRepository MessageRepository { get; }
+        INewsRepository NewsRepository { get; }
     }
 }

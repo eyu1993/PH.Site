@@ -27,6 +27,6 @@ namespace PH.Site.DTO
         public DateTime? CreateDate { get; set; }
 
         [BindNever]
-        public DateTime? ModifyDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
     }
 }

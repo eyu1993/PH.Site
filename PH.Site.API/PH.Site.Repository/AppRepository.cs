@@ -28,7 +28,7 @@ namespace PH.Site.Repository
 
         public void AddCategory(Guid appId, AppCategoryDTO category)
         {
-            string sql = "insert into AppCategory(AppId,CategoryId,Url,QRCode,CreateDate,ModifyDate) values(@AppId,@CategoryId,@Url,@QRCode,getdate(),getdate())";
+            string sql = "insert into AppCategory(AppId,CategoryId,Url,QRCode,CreateDate,UpdateDate) values(@AppId,@CategoryId,@Url,@QRCode,getdate(),getdate())";
             _conn.Execute(sql, new
             {
                 AppId = appId,
@@ -67,7 +67,7 @@ namespace PH.Site.Repository
 
         public void UpdateCategory(Guid appId, AppCategoryDTO category)
         {
-            string sql = @"update AppCategory set Url=@Url,QRCode=@QRCode,ModifyDate=getdate() where AppId=@AppId and CategoryId=@CategoryId";
+            string sql = @"update AppCategory set Url=@Url,QRCode=@QRCode,UpdateDate=getdate() where AppId=@AppId and CategoryId=@CategoryId";
             _conn.Execute(sql, new
             {
                 AppId = appId,
@@ -91,7 +91,7 @@ namespace PH.Site.Repository
                                 ac.Url,
                                 ac.QRCode,
                                 ac.CreateDate,
-                                ac.ModifyDate 
+                                ac.UpdateDate 
                             from App as a
                             left join AppCategory as ac 
                             on a.Id = ac.AppId
@@ -125,7 +125,7 @@ namespace PH.Site.Repository
                                 ac.Url,
                                 ac.QRCode,
                                 ac.CreateDate,
-                                ac.ModifyDate 
+                                ac.UpdateDate 
                             from App as a
                             left join AppCategory as ac 
                             on a.Id = ac.AppId
