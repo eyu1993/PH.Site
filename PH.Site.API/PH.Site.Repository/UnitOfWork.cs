@@ -11,6 +11,7 @@ namespace PH.Site.Repository
         private IDbTransaction _trans;
         public UnitOfWork()
         {
+            //_conn = new SqlConnection("data source=.;initial catalog=PH;user id=pinhua;password=pinhua.site");
             _conn = new SqlConnection("data source=.;initial catalog=Site;user id=pinhua;password=pinhua.site");
             _conn.Open();
             _trans = _conn.BeginTransaction();
@@ -18,6 +19,7 @@ namespace PH.Site.Repository
         public IAppRepository AppRepository => new AppRepository(_conn, _trans);
         public ICategoryRepository CategoryRepository => new CategoryRepository(_conn, _trans);
         public IMessageRepository MessageRepository => new MessageRepository(_conn, _trans);
+        public INewsRepository NewsRepository => new NewsRepository(_conn, _trans);
 
         public void Dispose()
         {
