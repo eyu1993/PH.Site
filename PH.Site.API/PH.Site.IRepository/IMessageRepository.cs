@@ -9,6 +9,6 @@ namespace PH.Site.IRepository
         void Add(Message message);
         void Delete(int id);
         void Update(Message message);
-        IList<Message> Get(Guid appId);
+        IList<Message> Get(Guid? appId);
     }
 }

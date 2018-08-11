@@ -11,8 +11,8 @@ namespace PH.Site.Repository
         private IDbTransaction _trans;
         public UnitOfWork()
         {
-            //_conn = new SqlConnection("data source=.;initial catalog=PH;user id=pinhua;password=pinhua.site");
-            _conn = new SqlConnection("data source=.;initial catalog=Site;user id=pinhua;password=pinhua.site");
+            _conn = new SqlConnection("data source=.;initial catalog=PH;user id=pinhua;password=pinhua.site");
+            //_conn = new SqlConnection("data source=.;initial catalog=Site;user id=pinhua;password=pinhua.site");
             _conn.Open();
             _trans = _conn.BeginTransaction();
         }

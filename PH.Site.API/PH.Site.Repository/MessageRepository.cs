@@ -17,8 +17,20 @@ namespace PH.Site.Repository
 
         public void Add(Message message)
         {
-            string sql = "insert into Message Values(@Address,@ReplyTime,@ReplyId,@Order,@AppId,@IsShow,@IsPass,@UserId)";
-            _conn.Execute(sql, message, transaction: _trans);
+            string sql = "insert into Message Values(@AppId,@UserId,@Content,@ReplyTime,@ReplyId,@Order,@Ip,@Address,@IsShow,@IsPass)";
+            _conn.Execute(sql, new
+            {
+                AppId = message.AppId,
+                UserId = message.UserId,
+                Content = message.Content,
+                ReplyTime = message.ReplyTime,
+                ReplyId = message.ReplyId,
+                Order = message.Order,
+                Ip = message.Ip,
+                Address = message.Address,
+                IsShow = message.IsShow,
+                IsPass = message.IsPass
+            }, transaction: _trans);
         }
 
         public void Delete(int id)
@@ -32,9 +44,10 @@ namespace PH.Site.Repository
             throw new NotImplementedException();
         }
 
-        public IList<Message> Get(Guid appId)
+        public IList<Message> Get(Guid? appId)
         {
-            throw new NotImplementedException();
+            string sql = "select * from Message where AppId=@AppId";
+            return _conn.Query<Message>(sql, new { AppId = appId }, transaction: _trans).AsList();
         }
     }
 }
