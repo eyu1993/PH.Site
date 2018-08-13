@@ -44,10 +44,31 @@ namespace PH.Site.Repository
             throw new NotImplementedException();
         }
 
-        public IList<Message> Get(Guid? appId)
+        public IEnumerable<Message> Get(Guid? appId)
         {
-            string sql = "select * from Message where AppId=@AppId";
-            return _conn.Query<Message>(sql, new { AppId = appId }, transaction: _trans).AsList();
+            string sql = "";
+            if (appId == null)
+            {
+                sql = "select * from Message where AppId is null";
+                return _conn.Query<Message>(sql, transaction: _trans);
+            }
+            else
+            {
+                sql = "select * from Message where AppId=@AppId";
+                return _conn.Query<Message>(sql, new { AppId = appId }, transaction: _trans);
+            }
+        }
+
+        public IEnumerable<Message> GetUnProcessed()
+        {
+            string sql = "select * from Message where IsPass=0";
+            return _conn.Query<Message>(sql, transaction: _trans);
+        }
+
+        public void Process(int id)
+        {
+            string sql = "update Message set IsShow=1,IsPass=1 where id=@id";
+            _conn.Execute(sql, new { id = id }, transaction: _trans);
         }
     }
 }

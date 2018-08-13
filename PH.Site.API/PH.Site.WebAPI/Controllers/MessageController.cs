@@ -70,10 +70,28 @@ namespace PH.Site.WebAPI.Controllers
         /// </summary>
         /// <param name="AppId">（可选的）若输入AppId，则获取app的留言，若为空则是公用留言板</param>
         /// <returns></returns>
-        [HttpGet("{AppId}")]
+        [HttpGet]
         public IActionResult Get(Guid? AppId)
         {
             return Ok(_uow.MessageRepository.Get(AppId));
+        }
+
+        /// <summary>
+        /// 获取所有未处理的留言
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetUnProcessed")]
+        public IActionResult GetUnProcessed()
+        {
+            return Ok(_uow.MessageRepository.GetUnProcessed());
+        }
+
+        [HttpPatch]
+        public IActionResult Update(int id)
+        {
+            _uow.MessageRepository.Process(id);
+            _uow.SaveChanges();
+            return Ok();
         }
     }
 }
