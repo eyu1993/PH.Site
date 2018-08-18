@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PH.Site.IRepository;
 using PH.Site.Model;
+using System;
 
 namespace PH.Site.WebAPI.Controllers
 {
@@ -13,11 +9,12 @@ namespace PH.Site.WebAPI.Controllers
     [Route("api/Message")]
     public class MessageController : Controller
     {
-        public IUnitOfWork _uow { get; set; }
         public MessageController(IUnitOfWork unitOfWork)
         {
             this._uow = unitOfWork;
         }
+
+        public IUnitOfWork _uow { get; set; }
 
         /// <summary>
         /// 发布一条留言
@@ -63,7 +60,6 @@ namespace PH.Site.WebAPI.Controllers
             _uow.SaveChanges();
             return Ok();
         }
-
 
         /// <summary>
         /// 获取留言
