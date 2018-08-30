@@ -1,12 +1,35 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/app/index/index",
+    "pages/app/edit/edit",
+    "pages/app/detail/detail",
+    "pages/tool/index/index",
+    "pages/tool/detail/detail",
+    "pages/message/index/index",
+    "pages/message/manager/manager"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+    "navigationBarTitleText": "PH.Site",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/app/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/tool/index/index",
+        "text": "小工具"
+      },
+      {
+        "pagePath": "pages/message/index/index",
+        "text": "留言"
+      }
+    ],
+    "selectedColor": "#0069d9"
   }
 }
