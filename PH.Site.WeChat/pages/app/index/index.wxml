@@ -1,12 +1,24 @@
-<view>
-
-  <view wx:for="{{Apps}}" wx:key="{{AppId}}" wx:for-item="app">
-    <!-- <image src='{{app.ImageUrl}}'>
-    </image> -->
-    <button type='warn'>{{app.AppName}}</button>
-    <!-- <view wx:for="{{app.Category}}" wx:for-item="cat" wx:key="{{CategoryId}}">
-      <text>{{cat.Name}}</text>
-    </view> -->
-
-  </view>
+<view class="page">
+    <block wx:for="{{Apps}}" wx:key="{{AppId}}" wx:for-item="app">
+        <view class="app-card">
+            <view class="app-card-media">
+                <image class="app-card-image" src="{{app.Image}}" />
+                <view class="app-card-content">
+                    <view class="app-card-name">
+                        <text>{{app.AppName}}</text>
+                    </view>
+                    <view class="app-card-desc">
+                        <text>{{app.Description}}</text>
+                    </view>
+                </view>
+            </view>
+            <view class="app-card-button">
+                <view class="weui-flex">
+                    <view class="weui-flex__item" wx:for="{{app.Category}}" wx:key="CategoryId" wx:for-item="cat">
+                        <button>{{cat.Name}}</button>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </block>
 </view>
