@@ -1,0 +1,89 @@
+@media screen and (min-width: 1920px) {
+  .grid-content{
+    height: 340px!important;
+  }
+}
+
+/*#ff99cc*/
+.el-row {
+  margin-bottom: 20px;
+}
+.el-row:last-child {
+   margin-bottom: 0;
+ }
+.el-col {
+  border-radius: 4px;
+}
+.bg-purple-dark {
+  background: #99a9bf;
+}
+.bg-purple {
+  background: #fff;
+  webkit-box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
+.grid-content {
+  border-radius: 4px;
+  height:245px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
+}
+
+/*首页网站图片*/
+.site-img>img{
+  width:100%;
+  height:90%;
+  border-radius: 4px;
+  position: relative;
+}
+
+
+.project{
+  font-size: 14px;
+  width:22%;
+  position: absolute;
+  bottom:60px;
+  z-index: 1;
+  color:#fff;
+  background:  rgba(0, 0, 0, 0.5);
+  height:50px;
+  overflow: hidden;
+  text-align: left;
+  text-shadow: rgba(255, 255, 255, 0.3) 0 1px 0;
+  padding-left: 10px;
+}
+
+.project-name{
+  line-height: 5px!important;
+}
+
+.project:nth-child(2) p{
+  width:290px;
+  line-height: 15px;
+}
+
+.soft-type span a{
+  display: inline-block;
+  width: 80px;
+  float: left;
+  margin-left: 10px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  text-align: center;
+  text-decoration: none;
+  color: #a7a7a7;
+}
+
+.soft-type span a:hover{
+  background: #e5e9f2;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+}

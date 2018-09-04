@@ -3,6 +3,7 @@
         "*.cjson": "jsonc",
         "*.wxss": "css",
         "*.wxs": "javascript",
-        "*.wxml": "wxml"
+        "*.wxml": "html",
+        "*.css": "css"
     }
 }
